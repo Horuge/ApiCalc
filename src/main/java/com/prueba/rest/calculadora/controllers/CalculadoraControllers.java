@@ -6,6 +6,8 @@ import com.prueba.rest.calculadora.models.Result;
 import com.prueba.rest.calculadora.models.operationstype.Operation;
 import com.prueba.rest.calculadora.models.operationstype.operations.AddOperation;
 import com.prueba.rest.calculadora.models.operationstype.operations.SubstractOperacion;
+import io.corp.calculator.TracerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin()
 public class CalculadoraControllers {
 
+    @Autowired
+    private static TracerImpl tracer;
+
     /**
      * Servicio de suma
      * @param operation
@@ -26,14 +31,18 @@ public class CalculadoraControllers {
     public Result add(@RequestBody AddOperation operation) {
         Result result = new Result();
 
+        tracer.trace("Operación de suma IN");
+
         if(null != operation) {
             // Si no es nulo realiza la operación de suma.
             result = this.doOperacion(operation);
         } else {
             // Operación no se ha recibido
+            tracer.trace("No ha llegado la operación de suma.");
             result.setMensaje(Error.ERROR_OPERACION.getError());
         }
 
+        tracer.trace("Operación de suma OUT");
         return result;
     }
 
@@ -46,6 +55,8 @@ public class CalculadoraControllers {
     public Result substract(@RequestBody SubstractOperacion operation) {
         Result result = new Result();
 
+        tracer.trace("Operación de resta IN");
+
         if(null != operation) {
             // Si no es nulo realiza la operación de resta.
             result = this.doOperacion(operation);
@@ -55,6 +66,7 @@ public class CalculadoraControllers {
             result.setOk(Boolean.FALSE);
         }
 
+        tracer.trace("Operación de resta OUT");
         return result;
     }
 
@@ -67,11 +79,16 @@ public class CalculadoraControllers {
         Result result  = new Result();
         try {
             // Obtencion del resultado de la operación.
+            tracer.trace("Ejecutando operación.");
             result = operation.run();
         } catch(Exception e) {
+            tracer.trace("Error durante la ejecución del servicio: ");
+            tracer.trace(e);
             // Error en operation.
             result.setMensaje(Error.ERROR_OPE_EXECUTION.getError());
         }
+
+        tracer.trace(result);
 
         return result;
     }
