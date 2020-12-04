@@ -1,5 +1,18 @@
 package com.prueba.rest.calculadora.common;
 
-public enum Errores {
+/**
+ * Enumerado para controlar los errores.
+ */
+public enum Error {
 
+    ERROR_NOT_NUMBER("Error: no se han introducido valores númericos.");
+    private String error;
+
+    Error(String error) {
+        this.error = error;
+    }
+
+    public String getError() {
+        return error;
+    }
 }
