@@ -16,9 +16,7 @@ import java.math.BigDecimal;
 public abstract class OperationImpl implements Operation {
 
     @Autowired
-    private TracerImpl tracer;
-
-    private static final Logger log = LogManager.getLogger(OperationImpl.class);
+    private static TracerImpl tracer;
 
     /**
      * Operador 1
@@ -56,7 +54,4 @@ public abstract class OperationImpl implements Operation {
         this.ope2 = ope2;
     }
 
-    public static Logger getLogger() {
-        return log;
-    }
 }
