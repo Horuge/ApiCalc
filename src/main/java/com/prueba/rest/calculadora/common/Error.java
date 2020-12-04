@@ -8,7 +8,8 @@ public enum Error {
     /**
      * Error: no se han introducido valores númericos.
      */
-    ERROR_NOT_NUMBER("Error: no se han introducido valores númericos.");
+    ERROR_ADD("Error: no se han introducido valores númericos en alguno de los sumandos."),
+    ERROR_SUBS("Error: minuendo o sustraendo no son valores númericos.");
     private String error;
 
     Error(String error) {
