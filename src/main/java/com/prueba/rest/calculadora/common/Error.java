@@ -5,6 +5,9 @@ package com.prueba.rest.calculadora.common;
  */
 public enum Error {
 
+    /**
+     * Error: no se han introducido valores númericos.
+     */
     ERROR_NOT_NUMBER("Error: no se han introducido valores númericos.");
     private String error;
 
