@@ -14,15 +14,15 @@ public class AddOperation extends OperationImpl {
     @Override
     public Result run() throws Exception {
         Result result = new Result();
+        result.setOperacion(Constants.ADD);
         getTracer().trace(Constants.ADD);
 
-        if(this.ope1 == null || this.ope2 == null) {
+        if(null == this.ope1  || null == this.ope2) {
             // Alguno de los operadores es nulo.
-            result.setMensaje(Error.ERROR_NOT_NUMBER.getError());
+            result.setMensaje(Error.ERROR_ADD.getError());
             result.setOk(Boolean.FALSE);
-            result.setOperacion(Constants.ADD);
             // Trazamos la operación y el error.
-            getTracer().trace(Error.ERROR_NOT_NUMBER.getError());
+            getTracer().trace(Error.ERROR_ADD.getError());
         } else {
             result.setResultado(ope1.add(ope2));
             result.setMensaje(ope1.toString() + " + " + operandoToStringNegativo(ope2) + " = " + result.toString());
