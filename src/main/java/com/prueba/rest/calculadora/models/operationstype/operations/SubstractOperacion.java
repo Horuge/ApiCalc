@@ -40,7 +40,7 @@ public class SubstractOperacion extends OperationImpl {
 
     @Override
     public String toString() {
-        return "AddOperacion: {minuendo=" + ope1.toString() +
+        return "SubstractOperacion: {minuendo=" + ope1.toString() +
                 ", sustraendo=" + ope2.toString() + "}";
     }
 }
