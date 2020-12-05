@@ -18,6 +18,10 @@ public enum Error {
         this.error = error;
     }
 
+    /**
+     * Get para conseguir el mensaje del error.
+     * @return String Descripción del error.
+     */
     public String getError() {
         return error;
     }

@@ -3,7 +3,7 @@ package com.prueba.rest.calculadora.models;
 import java.math.BigDecimal;
 
 /**
- * Resultado de la operación.
+ * Resultado de la operación. Objeto devuelto por el servicio.
  */
 public class Result {
 

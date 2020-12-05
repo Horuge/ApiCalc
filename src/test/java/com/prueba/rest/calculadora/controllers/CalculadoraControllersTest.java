@@ -25,6 +25,10 @@ class CalculadoraControllersTest {
     @Autowired
     private CalculadoraControllers calculadoraControllers;
 
+    /**
+     * Test suma simple.
+     * @throws Exception Excepción genérica al mockear.
+     */
     @Test
     public void addTest() throws Exception {
         String body = "{\"ope1\":1,\"ope2\":2}";
@@ -41,6 +45,10 @@ class CalculadoraControllersTest {
         assertTrue(resp.getContentAsString().contains("3"));
     }
 
+    /**
+     * Test suma con sumando negativo.
+     * @throws Exception Excepción genérica al mockear.
+     */
     @Test
     public void addNegativoTest() throws Exception {
         String body = "{\"ope1\":1,\"ope2\":-2}";
@@ -58,6 +66,10 @@ class CalculadoraControllersTest {
         assertTrue(resp.getContentAsString().contains("(-2)"));
     }
 
+    /**
+     * Suma con operador nulo.
+     * @throws Exception Excepción genérica al mockear.
+     */
     @Test
     public void addNullTest() throws Exception {
         String body = "{\"ope2\":-2}";
