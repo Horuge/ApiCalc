@@ -10,8 +10,10 @@ import java.math.BigDecimal;
 
 public class SubstractOperacion extends OperationImpl {
 
-    @Autowired
-    private static TracerImpl tracer;
+    // @Autowired
+    // private TracerImpl tracer;
+
+    TracerImpl tracer = new TracerImpl();
 
     @Override
     public Result run() throws Exception {
@@ -26,8 +28,9 @@ public class SubstractOperacion extends OperationImpl {
             // Trazamos la operación y el error.
             tracer.trace(Error.ERROR_SUBS.getError());
         } else {
-            result.setResultado(ope1.subtract(ope2));
-            result.setMensaje(ope1.toString() + " - " + operandoToStringNegativo(ope2) + " = " + result.toString());
+            final BigDecimal resultado = ope1.subtract(ope2);
+            result.setResultado(resultado);
+            result.setMensaje(ope1.toString() + " - " + operandoToStringNegativo(ope2) + " = " + resultado);
             tracer.trace(Constants.OK);
         }
 

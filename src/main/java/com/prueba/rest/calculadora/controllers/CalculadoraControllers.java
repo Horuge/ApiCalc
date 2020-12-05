@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin()
 public class CalculadoraControllers {
 
-    @Autowired
-    private static TracerImpl tracer;
+    //@Autowired
+    //private static TracerImpl tracer;
+    TracerImpl tracer = new TracerImpl();
 
     /**
      * Servicio de suma
