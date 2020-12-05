@@ -15,9 +15,6 @@ import java.math.BigDecimal;
  */
 public abstract class OperationImpl implements Operation {
 
-    @Autowired
-    private static TracerImpl tracer;
-
     /**
      * Operador 1
      */
@@ -28,15 +25,6 @@ public abstract class OperationImpl implements Operation {
      */
     protected BigDecimal ope2;
 
-
-
-    public TracerImpl getTracer() {
-        return tracer;
-    }
-
-    public void setTracer(TracerImpl tracer) {
-        this.tracer = tracer;
-    }
 
     public BigDecimal getOpe1() {
         return ope1;

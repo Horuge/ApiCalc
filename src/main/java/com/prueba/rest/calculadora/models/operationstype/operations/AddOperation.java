@@ -3,6 +3,8 @@ package com.prueba.rest.calculadora.models.operationstype.operations;
 import com.prueba.rest.calculadora.common.Constants;
 import com.prueba.rest.calculadora.common.Error;
 import com.prueba.rest.calculadora.models.Result;
+import io.corp.calculator.TracerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
@@ -11,22 +13,25 @@ import java.math.BigDecimal;
  */
 public class AddOperation extends OperationImpl {
 
+    @Autowired
+    private static TracerImpl tracer;
+
     @Override
     public Result run() throws Exception {
         Result result = new Result();
         result.setOperacion(Constants.ADD);
-        getTracer().trace(Constants.ADD);
+        tracer.trace(Constants.ADD);
 
         if(null == this.ope1  || null == this.ope2) {
             // Alguno de los operadores es nulo.
             result.setMensaje(Error.ERROR_ADD.getError());
             result.setOk(Boolean.FALSE);
             // Trazamos la operación y el error.
-            getTracer().trace(Error.ERROR_ADD.getError());
+            tracer.trace(Error.ERROR_ADD.getError());
         } else {
             result.setResultado(ope1.add(ope2));
             result.setMensaje(ope1.toString() + " + " + operandoToStringNegativo(ope2) + " = " + result.toString());
-            getTracer().trace(Constants.OK);
+            tracer.trace(Constants.OK);
         }
 
         return result;

@@ -3,27 +3,32 @@ package com.prueba.rest.calculadora.models.operationstype.operations;
 import com.prueba.rest.calculadora.common.Constants;
 import com.prueba.rest.calculadora.common.Error;
 import com.prueba.rest.calculadora.models.Result;
+import io.corp.calculator.TracerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
 public class SubstractOperacion extends OperationImpl {
 
+    @Autowired
+    private static TracerImpl tracer;
+
     @Override
     public Result run() throws Exception {
         Result result = new Result();
         result.setOperacion(Constants.RESTA);
-        getTracer().trace(Constants.RESTA);
+        tracer.trace(Constants.RESTA);
 
         if(null == this.ope1 || null == this.ope2 ) {
             // Alguno de los operadores es nulo.
             result.setMensaje(Error.ERROR_SUBS.getError());
             result.setOk(Boolean.FALSE);
             // Trazamos la operación y el error.
-            getTracer().trace(Error.ERROR_SUBS.getError());
+            tracer.trace(Error.ERROR_SUBS.getError());
         } else {
             result.setResultado(ope1.subtract(ope2));
             result.setMensaje(ope1.toString() + " - " + operandoToStringNegativo(ope2) + " = " + result.toString());
-            getTracer().trace(Constants.OK);
+            tracer.trace(Constants.OK);
         }
 
         return result;
