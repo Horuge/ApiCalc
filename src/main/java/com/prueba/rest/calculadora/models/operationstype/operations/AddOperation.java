@@ -3,9 +3,7 @@ package com.prueba.rest.calculadora.models.operationstype.operations;
 import com.prueba.rest.calculadora.common.Constants;
 import com.prueba.rest.calculadora.common.Error;
 import com.prueba.rest.calculadora.models.Result;
-import io.corp.calculator.TracerAPI;
 import io.corp.calculator.TracerImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
@@ -15,7 +13,7 @@ import java.math.BigDecimal;
 public class AddOperation extends OperationImpl {
 
     // @Autowired
-    // TracerImpl tracer;
+    // private TracerImpl tracer;
 
     TracerImpl tracer = new TracerImpl();
 
@@ -47,7 +45,7 @@ public class AddOperation extends OperationImpl {
      * @return String del operador, si es negativo entre parentesis.
      */
     private String operandoToStringNegativo(BigDecimal ope) {
-        return ope.compareTo(BigDecimal.ZERO) == -1 ? "(".concat(ope.toString()).concat(")") : ope.toString();
+        return ope.compareTo(BigDecimal.ZERO) < 0 ? "(".concat(ope.toString()).concat(")") : ope.toString();
     }
 
     @Override

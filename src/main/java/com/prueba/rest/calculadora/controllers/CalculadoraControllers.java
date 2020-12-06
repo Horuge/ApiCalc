@@ -7,7 +7,6 @@ import com.prueba.rest.calculadora.models.operationstype.Operation;
 import com.prueba.rest.calculadora.models.operationstype.operations.AddOperation;
 import com.prueba.rest.calculadora.models.operationstype.operations.SubstractOperacion;
 import io.corp.calculator.TracerImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,12 +19,12 @@ import org.springframework.web.bind.annotation.*;
 public class CalculadoraControllers {
 
     //@Autowired
-    //private static TracerImpl tracer;
+    //private TracerImpl tracer;
     TracerImpl tracer = new TracerImpl();
 
     /**
      * Servicio de suma
-     * @param operation
+     * @param operation AddOperation
      * @return Resultado de la operación de suma
      */
     @PostMapping(Constants.URL_ADD)
@@ -49,7 +48,7 @@ public class CalculadoraControllers {
 
     /**
      * Servicio de resta
-     * @param operation
+     * @param operation SubstractOperacion
      * @return Resultado de la operación de resta
      */
     @PostMapping(Constants.URL_SUBS)
@@ -73,7 +72,7 @@ public class CalculadoraControllers {
 
     /**
      * Ejecuta la operación.
-     * @param operation
+     * @param operation Operation
      * @return Result Resultado con la operación o con el error.
      */
     private Result doOperacion(Operation operation) {

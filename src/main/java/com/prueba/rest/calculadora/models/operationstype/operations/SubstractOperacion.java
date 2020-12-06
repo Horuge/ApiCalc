@@ -4,7 +4,6 @@ import com.prueba.rest.calculadora.common.Constants;
 import com.prueba.rest.calculadora.common.Error;
 import com.prueba.rest.calculadora.models.Result;
 import io.corp.calculator.TracerImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
@@ -43,7 +42,7 @@ public class SubstractOperacion extends OperationImpl {
      * @return String del operador, si es negativo entre paréntesis.
      */
     private String operandoToStringNegativo(BigDecimal ope) {
-        return ope.compareTo(BigDecimal.ZERO) == -1 ? "(".concat(ope.toString()).concat(")") : ope.toString();
+        return ope.compareTo(BigDecimal.ZERO) < 0 ? "(".concat(ope.toString()).concat(")") : ope.toString();
     }
 
     @Override
