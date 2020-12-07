@@ -10,6 +10,17 @@ En esta versión solamente ser realizan las operaciones de suma y resta.
 - Se ha implementado la interface runnable en cada operación, con lo que nos permitirá crear un hilo por cada solicitud de operación a realizar.
 - Se han implementado test para la suma y la resta muy básicos.
 
+Para realizar el proyecto es ha sido necesario añadir los jar proporcionados para generar trazas. Los jar se han añadido al repositorio local para acceder a ellos desde el archivo pom.xml.
+> mvn deploy:deploy-file -DgroupId=com.logger.tracer -DartifactId=tracer -Dversion=1.0.0 -Dfile=D:\workspace\tracer-1.0.0.jar -Dsources=D:\workspace\tracer-1.0.0-sources.jar -Djavadoc=D:\workspace\tracer-1.0.0-javadoc.jar -Durl=file:C:\Users\Jorge\.m2\repository
+
+En el pom.xml se ha añadido:
+    <dependency>
+        <groupId>com.logger.tracer</groupId>
+        <artifactId>tracer</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+
+
 # Endpoint
 El endpoint es:
 http://localhost:8080/api/calculator
