@@ -24,11 +24,11 @@ public class Constants {
     /**
      * Url servicio sumar
      */
-    public static final String URL_ADD = "/add";
+    public static final String URL_ADD = "suma";
 
     /**
      * Url servicio restar
      */
-    public static final String URL_SUBS = "/substract";
+    public static final String URL_SUBS = "resta";
 
 }
