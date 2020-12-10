@@ -43,7 +43,7 @@ public class CalculadoraControllers {
         return result;
     }
 
-    @GetMapping({"/{tipo}/"})
+    @GetMapping({"/{tipo}/ope"})
     public Result getOperationParam(@PathVariable String tipo, @RequestParam BigDecimal ope1, @RequestParam BigDecimal ope2) {
         Result result = new Result();
         if(null != ope1 && null != tipo && null != ope2) {
