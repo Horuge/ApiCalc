@@ -1,20 +1,21 @@
 package com.prueba.rest.calculadora.controllers;
 
 import com.prueba.rest.calculadora.common.Constants;
-import com.prueba.rest.calculadora.common.Error;
+import com.prueba.rest.calculadora.services.OperacionesService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @WebMvcTest(CalculadoraControllers.class)
 class CalculadoraControllersTest {
@@ -25,6 +26,9 @@ class CalculadoraControllersTest {
     @Autowired
     private CalculadoraControllers calculadoraControllers;
 
+    @Mock
+    private OperacionesService operacionesService;
+
     /**
      * Test suma simple.
      * @throws Exception Excepción genérica al mockear.
@@ -33,7 +37,7 @@ class CalculadoraControllersTest {
     public void addTest() throws Exception {
         String body = "{\"ope1\":1,\"ope2\":2}";
 
-        RequestBuilder rb = MockMvcRequestBuilders.post(Constants.URL + Constants.URL_ADD).accept(MediaType.APPLICATION_JSON)
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_ADD).accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON).content(body);
         MvcResult result = mockMvc.perform(rb).andReturn();
 
@@ -53,7 +57,7 @@ class CalculadoraControllersTest {
     public void addNegativoTest() throws Exception {
         String body = "{\"ope1\":1,\"ope2\":-2}";
 
-        RequestBuilder rb = MockMvcRequestBuilders.post(Constants.URL + Constants.URL_ADD).accept(MediaType.APPLICATION_JSON)
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_ADD).accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON).content(body);
         MvcResult result = mockMvc.perform(rb).andReturn();
 
@@ -74,7 +78,7 @@ class CalculadoraControllersTest {
     public void addNullTest() throws Exception {
         String body = "{\"ope2\":-2}";
 
-        RequestBuilder rb = MockMvcRequestBuilders.post(Constants.URL + Constants.URL_ADD).accept(MediaType.APPLICATION_JSON)
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_ADD).accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8").content(body);
         MvcResult result = mockMvc.perform(rb).andReturn();
 
@@ -91,7 +95,7 @@ class CalculadoraControllersTest {
     public void SubstTest() throws Exception {
         String body = "{\"ope1\":2,\"ope2\":1}";
 
-        RequestBuilder rb = MockMvcRequestBuilders.post(Constants.URL + Constants.URL_SUBS).accept(MediaType.APPLICATION_JSON)
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_SUBS).accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON).content(body);
         MvcResult result = mockMvc.perform(rb).andReturn();
 
@@ -107,7 +111,7 @@ class CalculadoraControllersTest {
     public void SubstNegativoTest() throws Exception {
         String body = "{\"ope1\":1,\"ope2\":-2}";
 
-        RequestBuilder rb = MockMvcRequestBuilders.post(Constants.URL + Constants.URL_SUBS).accept(MediaType.APPLICATION_JSON)
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_SUBS).accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON).content(body);
         MvcResult result = mockMvc.perform(rb).andReturn();
 
@@ -121,10 +125,10 @@ class CalculadoraControllersTest {
     }
 
     @Test
-    public void SubstNullTest() throws Exception {
+    public void SubNullTest() throws Exception {
         String body = "{\"ope2\":-2}";
 
-        RequestBuilder rb = MockMvcRequestBuilders.post(Constants.URL + Constants.URL_SUBS).accept(MediaType.APPLICATION_JSON)
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_SUBS).accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8").content(body);
         MvcResult result = mockMvc.perform(rb).andReturn();
 
@@ -137,4 +141,26 @@ class CalculadoraControllersTest {
         // assertTrue(resp.getContentAsString().contains(Error.ERROR_SUBS.getError()));
     }
 
+    /**
+     * Test get con parámetros.
+     * @throws Exception Excepcion
+     */
+    @Test
+    public void getAddTest() throws Exception {
+
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_ADD)
+                .param("ope1", "1")
+                .param("ope2", "-1")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(rb).andReturn();
+
+        MockHttpServletResponse resp = result.getResponse();
+
+        // Comprueba estatus 200
+        assertEquals(HttpStatus.OK.value(), resp.getStatus());
+        // Comprueba resultado operación
+        assertTrue(resp.getContentAsString().contains("3"));
+    }
 }

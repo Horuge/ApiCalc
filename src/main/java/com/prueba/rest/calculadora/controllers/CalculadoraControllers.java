@@ -7,11 +7,12 @@ import com.prueba.rest.calculadora.models.operationstype.operations.OperationImp
 import com.prueba.rest.calculadora.services.OperacionesService;
 import io.corp.calculator.TracerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 /**
- * Controller. Definicion servicios REST.
+ * Controller. Definición servicios REST.
  */
 @RestController
 @RequestMapping(Constants.URL)
@@ -26,64 +27,34 @@ public class CalculadoraControllers {
     //private TracerImpl tracer;
     TracerImpl tracer = new TracerImpl();
 
-    @PostMapping({"/{tipo}"})
-    public Result operacion(@PathVariable String tipo, @RequestBody OperationImpl operation) {
+    @GetMapping({"/{tipo}"})
+    public Result operation(@PathVariable String tipo, @RequestBody OperationImpl operation) {
         Result result = new Result();
         if(null != operation && null != tipo) {
+            // Si los parámetros no son nulos realizamos la operación.
             result = operacionesService.operacionBasica(tipo, operation);
         } else {
+            // Los parámetros recibidos no son correctos.
+            tracer.trace(Error.ERROR_OPE_EXECUTION.getError());
             result.setOk(Boolean.FALSE);
             result.setMensaje(Error.ERROR_OPE_EXECUTION.getError());
         }
         return result;
     }
 
-    /**
-     * Servicio de suma
-     * @param operation AddOperation
-     * @return Resultado de la operación de suma
-     */
-    /*@PostMapping(Constants.URL_ADD)
-    public Result add(@RequestBody AddOperation operation) {
+    @GetMapping({"/{tipo}"})
+    public Result getOperationParam(@PathVariable String tipo, @RequestParam BigDecimal ope1, @RequestParam BigDecimal ope2) {
         Result result = new Result();
-
-        tracer.trace("Operación de suma IN");
-
-        if(null != operation) {
-            // Si no es nulo realiza la operación de suma.
-            result = this.doOperacion(operation);
+        if(null != ope1 && null != tipo && null != ope2) {
+            // Si los parámetros no son nulos realizamos la operación.
+            result = operacionesService.operacionBasicaParam(tipo, ope1, ope2);
         } else {
-            // Operación no se ha recibido
-            tracer.trace("No ha llegado la operación de suma.");
-            result.setMensaje(Error.ERROR_OPERACION.getError());
-        }
-
-        tracer.trace("Operación de suma OUT");
-        return result;
-    }*/
-
-    /**
-     * Servicio de resta
-     * @param operation SubstractOperacion
-     * @return Resultado de la operación de resta
-     */
-    /*@PostMapping(Constants.URL_SUBS)
-    public Result subtract(@RequestBody SubtractOperacion operation) {
-        Result result = new Result();
-
-        tracer.trace("Operación de resta IN");
-
-        if(null != operation) {
-            // Si no es nulo realiza la operación de resta.
-            result = this.doOperacion(operation);
-        } else {
-            // Operación no se ha recibido
-            result.setMensaje(Error.ERROR_OPERACION.getError());
+            // Ha habido un error en la url
+            tracer.trace(Error.ERROR_OPE_EXECUTION.getError());
             result.setOk(Boolean.FALSE);
+            result.setMensaje(Error.ERROR_OPE_EXECUTION.getError());
         }
-
-        tracer.trace("Operación de resta OUT");
         return result;
-    }*/
+    }
 
 }

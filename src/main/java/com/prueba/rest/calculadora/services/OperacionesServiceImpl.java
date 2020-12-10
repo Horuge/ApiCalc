@@ -10,6 +10,8 @@ import com.prueba.rest.calculadora.models.operationstype.operations.SubtractOper
 import io.corp.calculator.TracerImpl;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class OperacionesServiceImpl implements OperacionesService{
 
@@ -18,6 +20,7 @@ public class OperacionesServiceImpl implements OperacionesService{
 
     TracerImpl tracer = new TracerImpl();
 
+    @Override
     public Result operacionBasica(String tipo, OperationImpl operation) {
 
         Result result = new Result();
@@ -33,6 +36,38 @@ public class OperacionesServiceImpl implements OperacionesService{
             case Constants.RESTA:
                 tracer.trace("Operación: " + Constants.RESTA);
                 result = doOperacion(operation);
+                break;
+            // Por defecto envia ok false y operación.
+            default:
+                result.setOk(Boolean.FALSE);
+                result.setMensaje(Error.ERROR_OPERACION.getError());
+                break;
+        }
+
+        return result;
+    }
+
+    @Override
+    public Result operacionBasicaParam(String tipo, BigDecimal ope1, BigDecimal ope2) {
+        Result result = new Result();
+
+        // Comprueba que tipo de operación se ha solicitado.
+        switch (tipo.toUpperCase()) {
+            // Suma
+            case Constants.ADD:
+                tracer.trace("Operación: " + Constants.ADD);
+                AddOperation addOperation = new AddOperation();
+                addOperation.setOpe1(ope1);
+                addOperation.setOpe2(ope2);
+                result = doOperacion(addOperation);
+                break;
+            // Resta
+            case Constants.RESTA:
+                tracer.trace("Operación: " + Constants.RESTA);
+                SubtractOperacion restaOperation = new SubtractOperacion();
+                restaOperation.setOpe1(ope1);
+                restaOperation.setOpe2(ope2);
+                result = doOperacion(restaOperation);
                 break;
             // Por defecto envia ok false y operación.
             default:
