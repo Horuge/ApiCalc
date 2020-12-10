@@ -3,10 +3,11 @@ package com.prueba.rest.calculadora.controllers;
 import com.prueba.rest.calculadora.common.Constants;
 import com.prueba.rest.calculadora.common.Error;
 import com.prueba.rest.calculadora.models.Result;
-import com.prueba.rest.calculadora.models.operationstype.Operation;
-import com.prueba.rest.calculadora.models.operationstype.operations.AddOperation;
-import com.prueba.rest.calculadora.models.operationstype.operations.SubtractOperacion;
+import com.prueba.rest.calculadora.models.operationstype.operations.OperationImpl;
+import com.prueba.rest.calculadora.services.OperacionesService;
 import io.corp.calculator.TracerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -18,16 +19,31 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin()
 public class CalculadoraControllers {
 
+    @Autowired
+    private OperacionesService operacionesService;
+
     //@Autowired
     //private TracerImpl tracer;
     TracerImpl tracer = new TracerImpl();
+
+    @PostMapping({"/{tipo}"})
+    public Result operacion(@PathVariable String tipo, @RequestBody OperationImpl operation) {
+        Result result = new Result();
+        if(null != operation && null != tipo) {
+            result = operacionesService.operacionBasica(tipo, operation);
+        } else {
+            result.setOk(Boolean.FALSE);
+            result.setMensaje(Error.ERROR_OPE_EXECUTION.getError());
+        }
+        return result;
+    }
 
     /**
      * Servicio de suma
      * @param operation AddOperation
      * @return Resultado de la operación de suma
      */
-    @PostMapping(Constants.URL_ADD)
+    /*@PostMapping(Constants.URL_ADD)
     public Result add(@RequestBody AddOperation operation) {
         Result result = new Result();
 
@@ -44,14 +60,14 @@ public class CalculadoraControllers {
 
         tracer.trace("Operación de suma OUT");
         return result;
-    }
+    }*/
 
     /**
      * Servicio de resta
      * @param operation SubstractOperacion
      * @return Resultado de la operación de resta
      */
-    @PostMapping(Constants.URL_SUBS)
+    /*@PostMapping(Constants.URL_SUBS)
     public Result subtract(@RequestBody SubtractOperacion operation) {
         Result result = new Result();
 
@@ -68,29 +84,6 @@ public class CalculadoraControllers {
 
         tracer.trace("Operación de resta OUT");
         return result;
-    }
-
-    /**
-     * Ejecuta la operación.
-     * @param operation Operation
-     * @return Result Resultado con la operación o con el error.
-     */
-    private Result doOperacion(Operation operation) {
-        Result result  = new Result();
-        try {
-            // Obtencion del resultado de la operación.
-            tracer.trace("Ejecutando operación.");
-            result = operation.run();
-        } catch(Exception e) {
-            tracer.trace("Error durante la ejecución del servicio: ");
-            tracer.trace(e);
-            // Error en operation.
-            result.setMensaje(Error.ERROR_OPE_EXECUTION.getError());
-        }
-
-        tracer.trace(result);
-
-        return result;
-    }
+    }*/
 
 }
