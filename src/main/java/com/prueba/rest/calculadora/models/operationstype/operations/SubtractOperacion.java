@@ -7,7 +7,7 @@ import io.corp.calculator.TracerImpl;
 
 import java.math.BigDecimal;
 
-public class SubstractOperacion extends OperationImpl {
+public class SubtractOperacion extends OperationImpl {
 
     // @Autowired
     // private TracerImpl tracer;

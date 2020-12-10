@@ -5,7 +5,7 @@ import com.prueba.rest.calculadora.common.Error;
 import com.prueba.rest.calculadora.models.Result;
 import com.prueba.rest.calculadora.models.operationstype.Operation;
 import com.prueba.rest.calculadora.models.operationstype.operations.AddOperation;
-import com.prueba.rest.calculadora.models.operationstype.operations.SubstractOperacion;
+import com.prueba.rest.calculadora.models.operationstype.operations.SubtractOperacion;
 import io.corp.calculator.TracerImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,7 +52,7 @@ public class CalculadoraControllers {
      * @return Resultado de la operación de resta
      */
     @PostMapping(Constants.URL_SUBS)
-    public Result substract(@RequestBody SubstractOperacion operation) {
+    public Result subtract(@RequestBody SubtractOperacion operation) {
         Result result = new Result();
 
         tracer.trace("Operación de resta IN");
