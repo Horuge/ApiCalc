@@ -38,12 +38,12 @@ public class CalculadoraControllers {
         } else {
             // Los parámetros recibidos no son correctos.
             tracer.trace(Error.ERROR_OPE_EXECUTION.getError());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Error.ERROR_OPE_EXECUTION.getError());
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Error.ERROR_OPE_EXECUTION.getError());
         }
         return result;
     }
 
-    @GetMapping({"/{tipo}"})
+    @GetMapping({"/{tipo}/"})
     public Result getOperationParam(@PathVariable String tipo, @RequestParam BigDecimal ope1, @RequestParam BigDecimal ope2) {
         Result result = new Result();
         if(null != ope1 && null != tipo && null != ope2) {
@@ -52,7 +52,7 @@ public class CalculadoraControllers {
         } else {
             // Ha habido un error en la url
             tracer.trace(Error.ERROR_OPE_EXECUTION.getError());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Error.ERROR_OPE_EXECUTION.getError());
+            // throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Error.ERROR_OPE_EXECUTION.getError());
         }
         return result;
     }
