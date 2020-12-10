@@ -7,7 +7,9 @@ import com.prueba.rest.calculadora.models.operationstype.operations.OperationImp
 import com.prueba.rest.calculadora.services.OperacionesService;
 import io.corp.calculator.TracerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 
@@ -36,8 +38,7 @@ public class CalculadoraControllers {
         } else {
             // Los parámetros recibidos no son correctos.
             tracer.trace(Error.ERROR_OPE_EXECUTION.getError());
-            result.setOk(Boolean.FALSE);
-            result.setMensaje(Error.ERROR_OPE_EXECUTION.getError());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Error.ERROR_OPE_EXECUTION.getError());
         }
         return result;
     }
@@ -51,8 +52,7 @@ public class CalculadoraControllers {
         } else {
             // Ha habido un error en la url
             tracer.trace(Error.ERROR_OPE_EXECUTION.getError());
-            result.setOk(Boolean.FALSE);
-            result.setMensaje(Error.ERROR_OPE_EXECUTION.getError());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Error.ERROR_OPE_EXECUTION.getError());
         }
         return result;
     }

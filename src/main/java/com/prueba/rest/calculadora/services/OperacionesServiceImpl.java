@@ -8,7 +8,9 @@ import com.prueba.rest.calculadora.models.operationstype.operations.AddOperation
 import com.prueba.rest.calculadora.models.operationstype.operations.OperationImpl;
 import com.prueba.rest.calculadora.models.operationstype.operations.SubtractOperacion;
 import io.corp.calculator.TracerImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 
@@ -21,7 +23,7 @@ public class OperacionesServiceImpl implements OperacionesService{
     TracerImpl tracer = new TracerImpl();
 
     @Override
-    public Result operacionBasica(String tipo, OperationImpl operation) {
+    public Result operacionBasica(String tipo, OperationImpl operation) throws ResponseStatusException{
 
         Result result = new Result();
 
@@ -37,18 +39,16 @@ public class OperacionesServiceImpl implements OperacionesService{
                 tracer.trace("Operación: " + Constants.RESTA);
                 result = doOperacion(operation);
                 break;
-            // Por defecto envia ok false y operación.
             default:
-                result.setOk(Boolean.FALSE);
-                result.setMensaje(Error.ERROR_OPERACION.getError());
-                break;
+                tracer.trace(Error.ERROR_OPERACION_NO_ENCONTRADA.getError());
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, Error.ERROR_OPERACION_NO_ENCONTRADA.getError());
         }
 
         return result;
     }
 
     @Override
-    public Result operacionBasicaParam(String tipo, BigDecimal ope1, BigDecimal ope2) {
+    public Result operacionBasicaParam(String tipo, BigDecimal ope1, BigDecimal ope2) throws ResponseStatusException {
         Result result = new Result();
 
         // Comprueba que tipo de operación se ha solicitado.
@@ -69,11 +69,9 @@ public class OperacionesServiceImpl implements OperacionesService{
                 restaOperation.setOpe2(ope2);
                 result = doOperacion(restaOperation);
                 break;
-            // Por defecto envia ok false y operación.
             default:
-                result.setOk(Boolean.FALSE);
-                result.setMensaje(Error.ERROR_OPERACION.getError());
-                break;
+                tracer.trace(Error.ERROR_OPERACION_NO_ENCONTRADA.getError());
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, Error.ERROR_OPERACION_NO_ENCONTRADA.getError());
         }
 
         return result;
