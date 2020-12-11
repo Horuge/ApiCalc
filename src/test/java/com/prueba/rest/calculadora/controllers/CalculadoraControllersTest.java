@@ -142,11 +142,34 @@ class CalculadoraControllersTest {
     }
 
     /**
-     * Test get con parámetros.
+     * Test get con parámetros. Suma.
      * @throws Exception Excepcion
      */
     @Test
     public void getAddTest() throws Exception {
+
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_ADD)
+                .param("ope1", "1")
+                .param("ope2", "2")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(rb).andReturn();
+
+        MockHttpServletResponse resp = result.getResponse();
+
+        // Comprueba estatus 200
+        assertEquals(HttpStatus.OK.value(), resp.getStatus());
+        // Comprueba resultado operación
+        assertTrue(resp.getContentAsString().contains("3"));
+    }
+
+    /**
+     * Test get con parámetros. Suma número negativo.
+     * @throws Exception Excepcion
+     */
+    @Test
+    public void getAddNegativoTest() throws Exception {
 
         RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_ADD)
                 .param("ope1", "1")
@@ -162,5 +185,51 @@ class CalculadoraControllersTest {
         assertEquals(HttpStatus.OK.value(), resp.getStatus());
         // Comprueba resultado operación
         assertTrue(resp.getContentAsString().contains("3"));
+    }
+
+    /**
+     * Test get con parámetros. Resta.
+     * @throws Exception Excepcion
+     */
+    @Test
+    public void getRestaTest() throws Exception {
+
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_SUBS)
+                .param("ope1", "3")
+                .param("ope2", "2")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(rb).andReturn();
+
+        MockHttpServletResponse resp = result.getResponse();
+
+        // Comprueba estatus 200
+        assertEquals(HttpStatus.OK.value(), resp.getStatus());
+        // Comprueba resultado operación
+        assertTrue(resp.getContentAsString().contains("1"));
+    }
+
+    /**
+     * Test get con parámetros. Resta.
+     * @throws Exception Excepcion
+     */
+    @Test
+    public void getRestaNegativoTest() throws Exception {
+
+        RequestBuilder rb = MockMvcRequestBuilders.get(Constants.URL + Constants.URL_SUBS)
+                .param("ope1", "3")
+                .param("ope2", "-2")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(rb).andReturn();
+
+        MockHttpServletResponse resp = result.getResponse();
+
+        // Comprueba estatus 200
+        assertEquals(HttpStatus.OK.value(), resp.getStatus());
+        // Comprueba resultado operación
+        assertTrue(resp.getContentAsString().contains("5"));
     }
 }
