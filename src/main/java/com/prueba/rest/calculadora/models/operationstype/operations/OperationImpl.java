@@ -2,11 +2,6 @@ package com.prueba.rest.calculadora.models.operationstype.operations;
 
 import com.prueba.rest.calculadora.models.operationstype.Operation;
 
-import io.corp.calculator.TracerImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.math.BigDecimal;
 
 
